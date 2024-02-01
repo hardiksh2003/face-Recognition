@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition Based Attendance System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-image: url('/static/people_folder/bg_image.png');
+            background-size: cover;
+            font-family: sans-serif;
+            margin-top: 40px;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 86%;
+            margin: auto;
+            color:white;
+            border-color:white;
+        }
+
+        table, th, td {
+            border: 1px solid white;
+            font-size:20px;
+           
+        }
+
+        th, td {
+            padding: 5px;
+            color:white;
+            font-size:20px;
+        }
+
+
+        .container {
+            text-align: center;
+       
+            border-radius: 20px;
+            padding: 10px;
+            margin: 10px;
+            min-height: 400px;
+        }
+
+        .container h2 {
+            border-radius: 20px 20px 0 0;
+            background-color: #0b4c61;
+            color: white;
+            padding: 10px;
+        }
+
+        .container a {
+            text-decoration: none;
+            max-width: 300px;
+            color:white;
+        }
+
+        .button {
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            width: 490px;
+            padding: 10px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .add-user-form {
+         
+            border-radius: 20px;
+            padding: 0;
+            margin: 10px;
+            height: 400px;
+        }
+
+        .add-user-form h2 {
+            border-radius: 20px 20px 0 0;
+            
+            color: white;
+            padding: 10px;
+        }
+
+        .add-user-form label {
+            font-size: 20px;
+            color:white;
+        }
+
+        .add-user-form input {
+            font-size: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .add-user-form button {
+            width: 232px;
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        .total-users {
+            padding: 25px;
+            color:white;
+        }
+        img {
+            border-radius: 50%;
+            margin-top:130px;
+          }
+          .para{
+            color:white;
+            font-size:25px;
+        }
+        .heading{
+            color:white;
+            font-size:40px;
+        }
+        #myTable {
+            display: none;
+          }
+      
+          /* Style the image button */
+          #showTableButton {
+            cursor: pointer;
+            width: 200px;
+         height: 170px;
+         margin-right: 800px;
+         margin-top: 0px;
+          }
+          .para1{
+            color:white;
+            font-size:25px;
+            margin-right: 800px;
+          }
+          .container1 {
+            text-align: center;
+       
+            border-radius: 20px;
+            padding: 10px;
+            margin: 10px;
+            min-height: 400px;
+        }
+
+        .container1 h2 {
+            border-radius: 20px 20px 0 0;
+            background-color: #0b4c61;
+            color: white;
+            padding: 10px;
+        }
+
+        .container1 a {
+            text-decoration: none;
+            max-width: 300px;
+            color:white;
+        }
+        .container1 {
+            display: none;
+            /* Add your container styles here */
+        }
+        #button-image{
+            cursor: pointer;
+            width: 200px;
+         height: 170px;
+         margin-left: 1240px;
+        position:relative;
+        position:fixed;
+         margin-top: -264px;
+    display: flex;
+        }
+        .login{
+            color:white;
+            margin-left: 1313px;
+            font-size: 20px;
+            margin-top: -68px;}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="heading">Face Recognition Based Attendance System</h1>
+        {% if mess %}
+        <p style="color: red; font-size: 20px;">{{ mess }}</p>
+        {% endif %}
+        <div class="container">
+            
+          
+            <a href="/start" class="button">
+                <img style="width: 200px; height: 170px" src="{{ user_image }}" alt="User Image">
+            </a>
+            <p class="para">Mark Attendance</p>
+           
+            <img class="image-button" src="/static/people_folder/enter.png" alt="Image Button" id="showTableButton">
+            <p class ="para1">Check Attendance</p>
+            <table id="myTable" style="display: none;">
+                <tr>
+                    <th>S No</th>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Time</th>
+                </tr>
+                {% if l %}
+                {% for i in range(l) %}
+                <tr>
+                    <td>{{ i+1 }}</td>
+                    <td>{{ names[i] }}</td>
+                    <td>{{ rolls[i] }}</td>
+                    <td>{{ times[i] }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+    </div>
+   
+
+    <img src="/static/people_folder/loginimg.png" alt="Button Image" id="button-image" class="button">
+    
+    <p class="login">Log In</p>
+    <div class="container1" id="container1">
+        <form action="/add" method="POST" class="add-user-form">
+            <h2>Add New User <i class="material-icons">control_point_duplicate</i></h2>
+            <label for="newusername"><b>Enter New User Name*</b></label><br>
+            <input type="text" id="newusername" name="newusername" required><br>
+            <label for="newuserid"><b>Enter New User ID*</b></label><br>
+            <input type="number" id="newuserid" name="newuserid" required><br>
+            <button type="submit" class="button">Add New User</button><br>
+            <h5 class="total-users"><i>Total Users in Database: {{ totalreg }}</i></h5>
+        </form>
+    </div>
+    <script>
+        // JavaScript to show the table when the image is clicked
+        const showTableButton = document.getElementById('showTableButton');
+        const myTable = document.getElementById('myTable');
+    
+        showTableButton.addEventListener('click', function() {
+          if (myTable.style.display === 'none') {
+            myTable.style.display = 'table';
+          } else {
+            myTable.style.display = 'none';
+          }
+        });
+
+
+        const button = document.getElementById("button-image");
+const container = document.getElementById("container1");
+
+// Add a click event listener to the button
+button.addEventListener("click", () => {
+    // Toggle the visibility of the container
+    if (container1.style.display === "none" || container1.style.display === "") {
+        container1.style.display = "block";
+    } else {
+        container1.style.display = "none";
+    }
+});
+
+
+      </script>
+</body>
+
+</html>
